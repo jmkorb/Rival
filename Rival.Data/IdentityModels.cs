@@ -32,7 +32,6 @@ namespace Rival.Data
             return new ApplicationDbContext();
         }
         public DbSet<Player> Players { get; set; }
-        public DbSet<Match> Matches { get; set; }
         public DbSet<Court> Courts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

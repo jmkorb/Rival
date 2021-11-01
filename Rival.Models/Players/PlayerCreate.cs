@@ -20,7 +20,7 @@ namespace Rival.Models.Players
         public string LastName { get; set; }
         [Required]
         [MinLength(2, ErrorMessage = "Your location needs to have 2 or more characters")]
-        [MaxLength(2, ErrorMessage = "Your location needs to have 2 or more characters")]
+        [MaxLength(50, ErrorMessage = "Your city cannot be longer than 50 characters")]
         public string City { get; set; }
         [Required]
         public State State { get; set; }

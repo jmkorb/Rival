@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Players\PlayerCreate.cs" />
+    <Compile Include="Players\PlayerEdit.cs" />
     <Compile Include="Players\PlayerListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

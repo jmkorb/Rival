@@ -56,9 +56,13 @@
   <ItemGroup>
     <Compile Include="Court.cs" />
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202110300156444_initial.cs" />
-    <Compile Include="Migrations\202110300156444_initial.Designer.cs">
-      <DependentUpon>202110300156444_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202110300302319_first.cs" />
+    <Compile Include="Migrations\202110300302319_first.Designer.cs">
+      <DependentUpon>202110300302319_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110300323051_second.cs" />
+    <Compile Include="Migrations\202110300323051_second.Designer.cs">
+      <DependentUpon>202110300323051_second.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Player.cs" />
@@ -69,8 +73,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110300156444_initial.resx">
-      <DependentUpon>202110300156444_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110300302319_first.resx">
+      <DependentUpon>202110300302319_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110300323051_second.resx">
+      <DependentUpon>202110300323051_second.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

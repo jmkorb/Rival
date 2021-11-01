@@ -38,7 +38,7 @@ namespace Rival.Data
     public class Player
     {
         [Key]
-        public int PlayerId { get; set; }
+        public int Id { get; set; }
         [Required]
         public Guid UserId { get; set; }
         [Required]
