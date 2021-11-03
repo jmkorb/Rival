@@ -56,6 +56,22 @@ namespace Rival.Services.PlayerServices
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool DeletePlayer(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Players
+                        .Single(e => e.Id == id);
+
+                ctx.Players.Remove(entity);
+
+                return ctx.SaveChanges() == 1;
+            }
+        }
+
         public IEnumerable<PlayerListItem> GetPlayers()
         {
             using (var ctx = new ApplicationDbContext())
@@ -81,7 +97,7 @@ namespace Rival.Services.PlayerServices
                 return query.ToArray();
             }
         }
-        public PlayerEdit GetPlayerById(int id)
+        public PlayerDetail GetPlayerById(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -90,13 +106,14 @@ namespace Rival.Services.PlayerServices
                         .Players
                         .Single(e => e.Id == id);
 
-                return new PlayerEdit
+                return new PlayerDetail
                 {
                     PlayerId = entity.Id,
                     FirstName = entity.FirstName,
                     LastName = entity.LastName,
                     City = entity.City,
                     State = entity.State,
+                    DateJoined = entity.DateJoined,
                     PreferredSetNumber = entity.PreferredSetNumber,
                     Availability = entity.Availability,
                 };

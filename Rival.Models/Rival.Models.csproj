@@ -54,15 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Courts\CourtCreate.cs" />
+    <Compile Include="Courts\CourtDetail.cs" />
+    <Compile Include="Matches\MatchDetail.cs" />
     <Compile Include="Players\PlayerCreate.cs" />
+    <Compile Include="Players\PlayerDetail.cs" />
     <Compile Include="Players\PlayerEdit.cs" />
     <Compile Include="Players\PlayerListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Courts\" />
-    <Folder Include="Matches\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Rival.Data\Rival.Data.csproj">
       <Project>{84940B67-5BA8-41EF-B2B1-E32CDCDE5316}</Project>

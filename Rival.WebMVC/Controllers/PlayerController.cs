@@ -66,13 +66,6 @@ namespace Rival.WebMVC.Controllers
             return View(model);
         }
 
-        public ActionResult Details(int id)
-        {
-            var svc = CreatePlayerService();
-            var model = svc.GetPlayerById(id);
-
-            return View(model);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -98,7 +91,36 @@ namespace Rival.WebMVC.Controllers
             return View(model);
         }
 
+        public ActionResult Details(int id)
+        {
+            var service = CreatePlayerService();
+            var model = service.GetPlayerById(id);
 
+            return View(model);
+        }
+
+        [ActionName("Delete")]
+        public ActionResult Delete(int id)
+        {
+            var service = CreatePlayerService();
+            var model = service.GetPlayerById(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePlayer(int id)
+        {
+            var service = CreatePlayerService();
+
+            service.DeletePlayer(id);
+
+            TempData["SaveResult"] = "Your player was deleted";
+
+            return RedirectToAction("Index");
+        }
 
         private PlayerService CreatePlayerService()
         {

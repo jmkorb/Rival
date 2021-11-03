@@ -1,0 +1,42 @@
+﻿@model Rival.Models.Matches.MatchDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MatchDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MatchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinalScore)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MatchId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

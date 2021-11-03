@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Court.cs" />
     <Compile Include="IdentityModels.cs" />
+    <Compile Include="Match.cs" />
     <Compile Include="Migrations\202110300302319_first.cs" />
     <Compile Include="Migrations\202110300302319_first.Designer.cs">
       <DependentUpon>202110300302319_first.cs</DependentUpon>
@@ -63,6 +64,10 @@
     <Compile Include="Migrations\202110300323051_second.cs" />
     <Compile Include="Migrations\202110300323051_second.Designer.cs">
       <DependentUpon>202110300323051_second.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111022301581_second1.cs" />
+    <Compile Include="Migrations\202111022301581_second1.Designer.cs">
+      <DependentUpon>202111022301581_second1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Player.cs" />
@@ -78,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110300323051_second.resx">
       <DependentUpon>202110300323051_second.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111022301581_second1.resx">
+      <DependentUpon>202111022301581_second1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
