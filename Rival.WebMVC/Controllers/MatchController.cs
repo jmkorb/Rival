@@ -31,7 +31,7 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MatchDetail model)
+        public ActionResult Create(MatchCreate model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -52,14 +52,12 @@ namespace Rival.WebMVC.Controllers
         {
             var service = CreateMatchService();
             var detail = service.GetMatchById(id);
-            var model = new MatchDetail
+            var model = new MatchEdit
             {
                 MatchId = detail.MatchId,
-                PlayerOne = detail.PlayerOne,
-                PlayerTwo = detail.PlayerTwo,
                 Date = detail.Date,
                 Court = detail.Court,
-                FinalScore = detail.FinalScore,
+                FinalScore = detail.FinalScore
             };
 
             return View(model);
@@ -67,7 +65,7 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, MatchDetail model)
+        public ActionResult Edit(int id, MatchEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -111,21 +109,11 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePlayer(int id)
         {
-            var service = CreateMatchService();
-
             service.DeleteMatch(id);
 
             TempData["SaveResult"] = "Your match was deleted";
 
             return RedirectToAction("Index");
-        }
-
-
-        private MatchService CreateMatchService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new MatchService(userId);
-            return service;
         }
     }
 }

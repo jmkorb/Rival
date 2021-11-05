@@ -1,4 +1,5 @@
-﻿using Rival.Models.Courts;
+﻿using Microsoft.AspNet.Identity;
+using Rival.Models.Courts;
 using Rival.Services.CourtServices;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Rival.WebMVC.Controllers
         // GET Court/Index
         public ActionResult Index()
         {
+            var userId = Guid.Parse(User.Identity.GetUserId());
             var service = new CourtService();
             var model = service.GetCourts();
 
@@ -49,7 +51,7 @@ namespace Rival.WebMVC.Controllers
         {
             var service = CreateCourtService();
             var detail = service.GetCourtById(id);
-            var model = new CourtDetail
+            var model = new CourtEdit
             {
                 CourtId = detail.CourtId,
                 Location = detail.Location,
@@ -62,7 +64,7 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, CourtDetail model)
+        public ActionResult Edit(int id, CourtEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -117,6 +119,7 @@ namespace Rival.WebMVC.Controllers
 
         private CourtService CreateCourtService()
         {
+            var userId = Guid.Parse(User.Identity.GetUserId());
             var service = new CourtService();
             return service;
         }

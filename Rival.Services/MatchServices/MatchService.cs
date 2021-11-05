@@ -8,24 +8,14 @@ using System.Threading.Tasks;
 
 namespace Rival.Services.MatchServices
 {
-    public class MatchService
+    public class MatchService : IMatchService
     {
-        private readonly Guid _userId;
-
-        public MatchService(Guid userId)
-        {
-            _userId = userId;
-        }
-
-        public bool CreateMatch(MatchDetail model)
+        public bool CreateMatch(MatchCreate model)
         {
             var entity = new Match()
             {
-                PlayerOne = model.PlayerOne,
-                PlayerTwo = model.PlayerTwo,
                 Court = model.Court,
-                Date = model.Date,
-                FinalScore = model.FinalScore
+                Date = model.Date
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -35,7 +25,7 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public bool EditMatch(MatchDetail model)
+        public bool EditMatch(MatchEdit model, string userId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -68,7 +58,7 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public IEnumerable<MatchDetail> GetMatches()
+        public IEnumerable<MatchListItem> GetMatches(string userId)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -77,14 +67,12 @@ namespace Rival.Services.MatchServices
                         .Matches
                         .Select(
                             e =>
-                                new MatchDetail
+                                new MatchListItem
                                 {
                                     MatchId = e.Id,
                                     PlayerOne = e.PlayerOne,
                                     PlayerTwo = e.PlayerTwo,
-                                    Court = e.Court,
-                                    Date = e.Date,
-                                    FinalScore = e.FinalScore
+                                    Date = e.Date
                                 }
                         );
 
@@ -92,7 +80,7 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public MatchDetail GetMatchById(int id)
+        public MatchDetail GetMatchById(int id, string userId)
         {
             using (var ctx = new ApplicationDbContext())
             {

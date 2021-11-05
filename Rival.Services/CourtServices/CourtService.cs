@@ -10,6 +10,12 @@ namespace Rival.Services.CourtServices
 {
     public class CourtService
     {
+        private readonly Guid _userId;
+
+        public CourtService(Guid userId)
+        {
+            _userId = userId;
+        }
         public CourtService() { }
         public bool CreateCourt(CourtCreate model)
         {
@@ -26,7 +32,7 @@ namespace Rival.Services.CourtServices
             }
         }
 
-        public bool EditCourt(CourtDetail model)
+        public bool EditCourt(CourtEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -35,6 +41,7 @@ namespace Rival.Services.CourtServices
                         .Courts
                         .Single(e => e.Id == model.CourtId);
 
+                entity.Id = model.CourtId;
                 entity.Location = model.Location;
                 entity.Condition = model.Condition;
 
@@ -57,7 +64,7 @@ namespace Rival.Services.CourtServices
             }
         }
 
-        public IEnumerable<CourtDetail> GetCourts()
+        public IEnumerable<CourtListItem> GetCourts()
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -66,7 +73,7 @@ namespace Rival.Services.CourtServices
                         .Courts
                         .Select(
                             e =>
-                                new CourtDetail
+                                new CourtListItem
                                 {
                                     CourtId = e.Id,
                                     Location = e.Location,
@@ -96,4 +103,4 @@ namespace Rival.Services.CourtServices
         }
     }
 }
-}
+
