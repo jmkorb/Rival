@@ -107,6 +107,7 @@
     <Compile Include="Court.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Match.cs" />
+    <Compile Include="MatchPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

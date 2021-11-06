@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Rival.Models.PlayerModels;
 using Rival.Models.Players;
+using Rival.Services.MatchPlayerServices;
 using Rival.Services.PlayerServices;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,8 @@ namespace Rival.WebMVC.Controllers
 
             if (service.CreatePlayer(model))
             {
+                var matchPlayerService = CreateMatchPlayerService();
+
                 TempData["SaveResult"] = "Your player was created.";
                 return RedirectToAction("Index");
             }
@@ -114,8 +117,9 @@ namespace Rival.WebMVC.Controllers
         public ActionResult DeletePlayer(int id)
         {
             var service = CreatePlayerService();
-
+            var matchPlayerService = CreateMatchPlayerService();
             service.DeletePlayer(id);
+            matchPlayerService.RemoveMatchPlayer(id);
 
             TempData["SaveResult"] = "Your player was deleted";
 
@@ -126,6 +130,13 @@ namespace Rival.WebMVC.Controllers
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var service = new PlayerService(userId);
+            return service;
+        }
+
+        private MatchPlayerService CreateMatchPlayerService()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var service = new MatchPlayerService(userId);
             return service;
         }
     }

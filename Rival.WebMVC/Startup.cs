@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Rival.Services.RoleServices;
 
 [assembly: OwinStartupAttribute(typeof(Rival.WebMVC.Startup))]
 namespace Rival.WebMVC
@@ -9,6 +10,10 @@ namespace Rival.WebMVC
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            var service = new RoleService();
+            service.CreateAdmin();
+            service.MakeMyUserAdmin();
         }
+
     }
 }

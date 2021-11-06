@@ -112,6 +112,9 @@
     <Compile Include="Matches\MatchEdit.cs" />
     <Compile Include="Matches\MatchCreate.cs" />
     <Compile Include="Matches\MatchDetail.cs" />
+    <Compile Include="MatchPlayers\MatchPlayerCreate.cs" />
+    <Compile Include="MatchPlayers\MatchPlayerEdit.cs" />
+    <Compile Include="MatchPlayers\MatchPlayerListItem.cs" />
     <Compile Include="Players\PlayerCreate.cs" />
     <Compile Include="Players\PlayerDetail.cs" />
     <Compile Include="Players\PlayerEdit.cs" />

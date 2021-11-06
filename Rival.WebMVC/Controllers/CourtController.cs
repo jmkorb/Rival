@@ -12,21 +12,23 @@ namespace Rival.WebMVC.Controllers
     [Authorize]
     public class CourtController : Controller
     {
-        // GET Court/Index
+        // GET: Note
         public ActionResult Index()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new CourtService();
+            var service = CreateCourtService();
             var model = service.GetCourts();
 
             return View(model);
         }
-        // GET Court/Create
+
+        // GET: Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourtCreate model)
@@ -37,31 +39,39 @@ namespace Rival.WebMVC.Controllers
 
             if (service.CreateCourt(model))
             {
-                TempData["SaveResult"] = "You created a new court.";
+                TempData["SaveResult"] = "Your note was created.";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "A new court could not be created.");
+            ModelState.AddModelError("", "Note could not be created.");
 
             return View(model);
         }
 
-        // GET Edit
+        public ActionResult Details(int id)
+        {
+            var svc = CreateCourtService();
+            var model = svc.GetCourtById(id);
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             var service = CreateCourtService();
             var detail = service.GetCourtById(id);
-            var model = new CourtEdit
-            {
-                CourtId = detail.CourtId,
-                Location = detail.Location,
-                Condition = detail.Condition
-            };
-
+            var model =
+                new CourtEdit
+                {
+                    CourtId = detail.CourtId,
+                    Location = detail.Location,
+                    Condition = detail.Condition
+                };
             return View(model);
         }
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, CourtEdit model)
@@ -82,27 +92,21 @@ namespace Rival.WebMVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "The court could not be updated.");
+            ModelState.AddModelError("", "The could not be updated.");
             return View(model);
         }
 
-        public ActionResult Details(int id)
-        {
-            var service = CreateCourtService();
-            var model = service.GetCourtById(id);
-
-            return View(model);
-        }
-
+        [Authorize(Roles = "Admin")]
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            var service = CreateCourtService();
-            var model = service.GetCourtById(id);
+            var svc = CreateCourtService();
+            var model = svc.GetCourtById(id);
 
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -112,7 +116,7 @@ namespace Rival.WebMVC.Controllers
 
             service.DeleteCourt(id);
 
-            TempData["SaveResult"] = "The was deleted";
+            TempData["SaveResult"] = "Your court was deleted";
 
             return RedirectToAction("Index");
         }
@@ -120,7 +124,7 @@ namespace Rival.WebMVC.Controllers
         private CourtService CreateCourtService()
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new CourtService();
+            var service = new CourtService(userId);
             return service;
         }
     }

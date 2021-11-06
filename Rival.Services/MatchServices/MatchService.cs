@@ -8,14 +8,24 @@ using System.Threading.Tasks;
 
 namespace Rival.Services.MatchServices
 {
-    public class MatchService : IMatchService
+    public class MatchService
     {
+        private readonly Guid _userId;
+
+        public MatchService(Guid userId)
+        {
+            _userId = userId;
+        }
+
         public bool CreateMatch(MatchCreate model)
         {
             var entity = new Match()
             {
-                Court = model.Court,
-                Date = model.Date
+                CreatorId = _userId,
+                PlayerOne = model.PlayerOne,
+                PlayerTwo = model.PlayerTwo,
+                Date = model.Date,
+                Court = model.Court
             };
 
             using (var ctx = new ApplicationDbContext())
@@ -25,17 +35,20 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public bool EditMatch(MatchEdit model, string userId)
+        public bool EditMatch(MatchEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .Matches
-                        .Single(e => e.Id == model.MatchId);
+                        .Where(e => e.CreatorId == _userId)
+                        .Single(e => e.Id == model.MatchId && e.CreatorId == _userId);
 
-                entity.Court = model.Court;
+                entity.Id = model.MatchId;
                 entity.Date = model.Date;
+                entity.Court = model.Court;
+                entity.Winner = model.Winner;
                 entity.FinalScore = model.FinalScore;
 
                 return ctx.SaveChanges() == 1;
@@ -46,11 +59,10 @@ namespace Rival.Services.MatchServices
         {
             using (var ctx = new ApplicationDbContext())
             {
-
                 var entity =
                     ctx
                         .Matches
-                        .Single(e => e.Id == id);
+                        .Single(e => e.Id == id && e.CreatorId == _userId);
 
                 ctx.Matches.Remove(entity);
 
@@ -58,13 +70,14 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public IEnumerable<MatchListItem> GetMatches(string userId)
+        public IEnumerable<MatchListItem> GetMatches()
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var query =
                     ctx
                         .Matches
+                        .Where(e => e.CreatorId == _userId)
                         .Select(
                             e =>
                                 new MatchListItem
@@ -79,23 +92,22 @@ namespace Rival.Services.MatchServices
                 return query.ToArray();
             }
         }
-
-        public MatchDetail GetMatchById(int id, string userId)
+        public MatchDetail GetMatchById(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
                         .Matches
-                        .Single(e => e.Id == id);
+                        .Single(e => e.Id == id && e.CreatorId == _userId);
 
                 return new MatchDetail
                 {
                     MatchId = entity.Id,
                     PlayerOne = entity.PlayerOne,
                     PlayerTwo = entity.PlayerTwo,
-                    Court = entity.Court,
                     Date = entity.Date,
+                    Court = entity.Court,
                     FinalScore = entity.FinalScore
                 };
             }

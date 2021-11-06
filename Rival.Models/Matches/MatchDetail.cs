@@ -14,6 +14,7 @@ namespace Rival.Models.Matches
         public MatchPlayer PlayerTwo { get; set; }
         public DateTime Date { get; set; }
         public Court Court { get; set; }
+        public MatchPlayer Winner { get; set; }
         public string FinalScore { get; set; }
     }
 }
