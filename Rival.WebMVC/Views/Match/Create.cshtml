@@ -14,16 +14,9 @@
     <div class="form-horizontal">
         <h4>MatchDetail</h4>
         <hr />
-        <div class="form-group">
-            @Html.LabelFor(model => model.PlayerOne, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PlayerOne, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlayerOne, "", new { @class = "text-danger" })
-            </div>
-        </div>     
         
         <div class="form-group">
-            @Html.LabelFor(model => model.PlayerTwo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class = "control-label col-md-2" >Your Opponent</div>
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PlayerTwo, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })

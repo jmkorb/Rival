@@ -19,17 +19,36 @@ namespace Rival.Services.MatchServices
 
         public bool CreateMatch(MatchCreate model)
         {
-            var entity = new Match()
+            using (var ctx = new ApplicationDbContext()) 
             {
-                CreatorId = _userId,
-                PlayerOne = model.PlayerOne,
-                PlayerTwo = model.PlayerTwo,
-                Date = model.Date,
-                Court = model.Court
-            };
+                var currentUser =
+                    ctx
+                        .MatchPlayers
+                        .Single(e => e.UserId == _userId);
 
-            using (var ctx = new ApplicationDbContext())
-            {
+                var matchPlayerOne = new MatchPlayerRecord
+                {
+                    MatchPlayerId = currentUser.Id,
+                    FirstName = currentUser.FirstName,
+                    LastName = currentUser.LastName
+                };
+
+                var matchPlayerTwo = new MatchPlayerRecord
+                {
+                    MatchPlayerId = model.PlayerTwo.Id,
+                    FirstName = model.PlayerTwo.FirstName,
+                    LastName = model.PlayerTwo.LastName
+                };
+
+                var entity = new Match()
+                {
+                    CreatorId = _userId,
+                    PlayerOne = matchPlayerOne,
+                    PlayerTwo = matchPlayerTwo,
+                    Date = model.Date,
+                    Court = model.Court
+                };
+
                 ctx.Matches.Add(entity);
                 return ctx.SaveChanges() == 1;
             }

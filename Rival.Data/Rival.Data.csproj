@@ -108,12 +108,22 @@
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="MatchPlayer.cs" />
+    <Compile Include="Migrations\202111070147023_initial.cs" />
+    <Compile Include="Migrations\202111070147023_initial.Designer.cs">
+      <DependentUpon>202111070147023_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202111070147023_initial.resx">
+      <DependentUpon>202111070147023_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

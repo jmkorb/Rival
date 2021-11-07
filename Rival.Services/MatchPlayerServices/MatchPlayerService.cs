@@ -68,7 +68,7 @@ namespace Rival.Services.MatchPlayerServices
                 var entity =
                     ctx
                         .MatchPlayers
-                        .Single(e => e.Id == model.MatchPlayerId && e.UserId == _userId);
+                        .Single(e => e.Id == model.MatchPlayerId);
 
                 entity.FirstName = model.FirstName;
                 entity.LastName = model.LastName;

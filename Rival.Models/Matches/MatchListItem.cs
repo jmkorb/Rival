@@ -10,8 +10,8 @@ namespace Rival.Models.Matches
     public class MatchListItem
     {
         public int MatchId { get; set; }
-        public MatchPlayer PlayerOne { get; set; }
-        public MatchPlayer PlayerTwo { get; set; }
+        public MatchPlayerRecord PlayerOne { get; set; }
+        public MatchPlayerRecord PlayerTwo { get; set; }
         public DateTime Date { get; set; }
     }
 }

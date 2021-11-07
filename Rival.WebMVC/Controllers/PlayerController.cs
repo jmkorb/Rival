@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Rival.Models.MatchPlayers;
 using Rival.Models.PlayerModels;
 using Rival.Models.Players;
 using Rival.Services.MatchPlayerServices;
@@ -54,10 +55,22 @@ namespace Rival.WebMVC.Controllers
         public ActionResult Edit(int id)
         {
             var service = CreatePlayerService();
+            var matchPlayerService = CreateMatchPlayerService();
             var detail = service.GetPlayerById(id);
             var model = new PlayerEdit
             {
                 PlayerId = detail.PlayerId,
+                FirstName = detail.FirstName,
+                LastName = detail.LastName,
+                City = detail.City,
+                State = detail.State,
+                PreferredSetNumber = detail.PreferredSetNumber,
+                Availability = detail.Availability
+            };
+
+            var matchPlayerModel = new MatchPlayerEdit
+            {
+                MatchPlayerId = detail.PlayerId,
                 FirstName = detail.FirstName,
                 LastName = detail.LastName,
                 City = detail.City,
@@ -72,7 +85,7 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PlayerEdit model)
+        public ActionResult Edit(int id, PlayerEdit model, MatchPlayerEdit matchPlayerModel)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -83,9 +96,11 @@ namespace Rival.WebMVC.Controllers
             }
 
             var service = CreatePlayerService();
+            var matchPlayerService = CreateMatchPlayerService();
 
             if (service.EditPlayer(model))
             {
+                matchPlayerService.EditMatchPlayer(matchPlayerModel);
                 TempData["SaveResult"] = "Your player was updated.";
                 return RedirectToAction("Index");
             }

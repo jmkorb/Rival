@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace Rival.Data
 {
+    public class MatchPlayerRecord
+    {
+        [Key]
+        public int MatchPlayerId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get { return FirstName + " " + LastName; } }
+    }
     public class Match
     {
         [Key]
@@ -15,9 +23,9 @@ namespace Rival.Data
         [Required]
         public Guid CreatorId { get; set; }
         [Required]
-        public MatchPlayer PlayerOne { get; set; }
+        public MatchPlayerRecord PlayerOne { get; set; }
         [Required]
-        public MatchPlayer PlayerTwo { get; set; }
+        public MatchPlayerRecord PlayerTwo { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public Court Court { get; set; }
