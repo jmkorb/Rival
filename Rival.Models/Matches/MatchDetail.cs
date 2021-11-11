@@ -10,11 +10,11 @@ namespace Rival.Models.Matches
     public class MatchDetail
     {
         public int MatchId { get; set; }
-        public MatchPlayerRecord PlayerOne { get; set; }
-        public MatchPlayerRecord PlayerTwo { get; set; }
+        public Player PlayerOne { get; set; }
+        public Player PlayerTwo { get; set; }
         public DateTime Date { get; set; }
         public Court Court { get; set; }
-        public MatchPlayer Winner { get; set; }
+        public string Winner { get; set; }
         public string FinalScore { get; set; }
     }
 }

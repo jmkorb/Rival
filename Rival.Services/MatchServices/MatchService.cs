@@ -23,30 +23,20 @@ namespace Rival.Services.MatchServices
             {
                 var currentUser =
                     ctx
-                        .MatchPlayers
+                        .Players
                         .Single(e => e.UserId == _userId);
 
-                var matchPlayerOne = new MatchPlayerRecord
-                {
-                    MatchPlayerId = currentUser.Id,
-                    FirstName = currentUser.FirstName,
-                    LastName = currentUser.LastName
-                };
-
-                var matchPlayerTwo = new MatchPlayerRecord
-                {
-                    MatchPlayerId = model.PlayerTwo.Id,
-                    FirstName = model.PlayerTwo.FirstName,
-                    LastName = model.PlayerTwo.LastName
-                };
+                List<Player> players = new List<Player>();
+                players.Add(currentUser);
+                Player playerTwo = ctx.Players.Single(e => e.Id == model.PlayerTwoId);
+                players.Add(playerTwo);
 
                 var entity = new Match()
                 {
                     CreatorId = _userId,
-                    PlayerOne = matchPlayerOne,
-                    PlayerTwo = matchPlayerTwo,
+                    SetOfPlayers = players,
                     Date = model.Date,
-                    Court = model.Court
+                    CourtId = model.CourtId
                 };
 
                 ctx.Matches.Add(entity);
@@ -102,8 +92,8 @@ namespace Rival.Services.MatchServices
                                 new MatchListItem
                                 {
                                     MatchId = e.Id,
-                                    PlayerOne = e.PlayerOne,
-                                    PlayerTwo = e.PlayerTwo,
+                                    PlayerOne = e.SetOfPlayers[0],
+                                    PlayerTwo = e.SetOfPlayers[1],
                                     Date = e.Date
                                 }
                         );
@@ -123,8 +113,8 @@ namespace Rival.Services.MatchServices
                 return new MatchDetail
                 {
                     MatchId = entity.Id,
-                    PlayerOne = entity.PlayerOne,
-                    PlayerTwo = entity.PlayerTwo,
+                    PlayerOne = entity.SetOfPlayers[0],
+                    PlayerTwo = entity.SetOfPlayers[1],
                     Date = entity.Date,
                     Court = entity.Court,
                     FinalScore = entity.FinalScore

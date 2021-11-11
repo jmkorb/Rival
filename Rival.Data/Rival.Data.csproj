@@ -107,10 +107,13 @@
     <Compile Include="Court.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Match.cs" />
-    <Compile Include="MatchPlayer.cs" />
-    <Compile Include="Migrations\202111070147023_initial.cs" />
-    <Compile Include="Migrations\202111070147023_initial.Designer.cs">
-      <DependentUpon>202111070147023_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202111080213104_first.cs" />
+    <Compile Include="Migrations\202111080213104_first.Designer.cs">
+      <DependentUpon>202111080213104_first.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202111112107581_removematchplayer.cs" />
+    <Compile Include="Migrations\202111112107581_removematchplayer.Designer.cs">
+      <DependentUpon>202111112107581_removematchplayer.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Player.cs" />
@@ -121,8 +124,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111070147023_initial.resx">
-      <DependentUpon>202111070147023_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111080213104_first.resx">
+      <DependentUpon>202111080213104_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111112107581_removematchplayer.resx">
+      <DependentUpon>202111112107581_removematchplayer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

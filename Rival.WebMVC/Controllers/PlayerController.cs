@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
-using Rival.Models.MatchPlayers;
 using Rival.Models.PlayerModels;
 using Rival.Models.Players;
-using Rival.Services.MatchPlayerServices;
 using Rival.Services.PlayerServices;
 using System;
 using System.Collections.Generic;
@@ -40,8 +38,6 @@ namespace Rival.WebMVC.Controllers
 
             if (service.CreatePlayer(model))
             {
-                var matchPlayerService = CreateMatchPlayerService();
-
                 TempData["SaveResult"] = "Your player was created.";
                 return RedirectToAction("Index");
             }
@@ -55,22 +51,10 @@ namespace Rival.WebMVC.Controllers
         public ActionResult Edit(int id)
         {
             var service = CreatePlayerService();
-            var matchPlayerService = CreateMatchPlayerService();
             var detail = service.GetPlayerById(id);
             var model = new PlayerEdit
             {
                 PlayerId = detail.PlayerId,
-                FirstName = detail.FirstName,
-                LastName = detail.LastName,
-                City = detail.City,
-                State = detail.State,
-                PreferredSetNumber = detail.PreferredSetNumber,
-                Availability = detail.Availability
-            };
-
-            var matchPlayerModel = new MatchPlayerEdit
-            {
-                MatchPlayerId = detail.PlayerId,
                 FirstName = detail.FirstName,
                 LastName = detail.LastName,
                 City = detail.City,
@@ -85,7 +69,7 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PlayerEdit model, MatchPlayerEdit matchPlayerModel)
+        public ActionResult Edit(int id, PlayerEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
@@ -96,11 +80,9 @@ namespace Rival.WebMVC.Controllers
             }
 
             var service = CreatePlayerService();
-            var matchPlayerService = CreateMatchPlayerService();
 
             if (service.EditPlayer(model))
             {
-                matchPlayerService.EditMatchPlayer(matchPlayerModel);
                 TempData["SaveResult"] = "Your player was updated.";
                 return RedirectToAction("Index");
             }
@@ -132,9 +114,7 @@ namespace Rival.WebMVC.Controllers
         public ActionResult DeletePlayer(int id)
         {
             var service = CreatePlayerService();
-            var matchPlayerService = CreateMatchPlayerService();
             service.DeletePlayer(id);
-            matchPlayerService.RemoveMatchPlayer(id);
 
             TempData["SaveResult"] = "Your player was deleted";
 
@@ -145,13 +125,6 @@ namespace Rival.WebMVC.Controllers
         {
             var userId = Guid.Parse(User.Identity.GetUserId());
             var service = new PlayerService(userId);
-            return service;
-        }
-
-        private MatchPlayerService CreateMatchPlayerService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new MatchPlayerService(userId);
             return service;
         }
     }

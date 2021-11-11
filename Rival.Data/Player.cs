@@ -55,8 +55,13 @@ namespace Rival.Data
         public PlayerAvailability Availability { get; set; }
         public PreferredSetNumber PreferredSetNumber { get; set; } = PreferredSetNumber.NoPreference;
         //public MatchDetail LastMatchPlayed { get; set; }
-        //public List<MatchDetail> MatchesPlayed { get; set; }
+        public virtual ICollection<Match> MatchesPlayed { get; set; }
         //public string Record { get; set; }
         public int? SportsmanshipRating { get; set; }
+
+        public Player()
+        {
+            MatchesPlayed = new HashSet<Match>();
+        }
     }
 }

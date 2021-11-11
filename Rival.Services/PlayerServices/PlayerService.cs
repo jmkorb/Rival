@@ -79,7 +79,6 @@ namespace Rival.Services.PlayerServices
                 var query =
                     ctx
                         .Players
-                        .Where(e => e.UserId == _userId)
                         .Select(
                             e =>
                                 new PlayerListItem
@@ -116,6 +115,7 @@ namespace Rival.Services.PlayerServices
                     DateJoined = entity.DateJoined,
                     PreferredSetNumber = entity.PreferredSetNumber,
                     Availability = entity.Availability,
+                    MatchesPlayed = entity.MatchesPlayed
                 };
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Rival.Data;
+using Rival.Models.Players;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,8 @@ namespace Rival.Models.Matches
 {
     public class MatchCreate
     {
-        public MatchPlayer PlayerOne { get; set; }
-        public MatchPlayer PlayerTwo { get; set; }
+        public int PlayerTwoId { get; set; }
         public DateTime Date { get; set; }
-        public Court Court { get; set; }
+        public int CourtId { get; set; }
     }
 }

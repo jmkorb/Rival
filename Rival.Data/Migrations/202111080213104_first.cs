@@ -3,7 +3,7 @@ namespace Rival.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class first : DbMigration
     {
         public override void Up()
         {
@@ -26,32 +26,16 @@ namespace Rival.Data.Migrations
                         Date = c.DateTime(nullable: false),
                         FinalScore = c.String(),
                         Court_Id = c.Int(),
-                        PlayerOne_MatchPlayerId = c.Int(nullable: false),
-                        PlayerTwo_MatchPlayerId = c.Int(nullable: false),
                         Winner_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Court", t => t.Court_Id)
-                .ForeignKey("dbo.MatchPlayerRecord", t => t.PlayerOne_MatchPlayerId, cascadeDelete: true)
-                .ForeignKey("dbo.MatchPlayerRecord", t => t.PlayerTwo_MatchPlayerId, cascadeDelete: true)
                 .ForeignKey("dbo.MatchPlayer", t => t.Winner_Id)
                 .Index(t => t.Court_Id)
-                .Index(t => t.PlayerOne_MatchPlayerId)
-                .Index(t => t.PlayerTwo_MatchPlayerId)
                 .Index(t => t.Winner_Id);
             
             CreateTable(
-                "dbo.MatchPlayerRecord",
-                c => new
-                    {
-                        MatchPlayerId = c.Int(nullable: false, identity: true),
-                        FirstName = c.String(),
-                        LastName = c.String(),
-                    })
-                .PrimaryKey(t => t.MatchPlayerId);
-            
-            CreateTable(
-                "dbo.MatchPlayer",
+                "dbo.Player",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -68,7 +52,7 @@ namespace Rival.Data.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Player",
+                "dbo.MatchPlayer",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -154,6 +138,19 @@ namespace Rival.Data.Migrations
                 .ForeignKey("dbo.ApplicationUser", t => t.ApplicationUser_Id)
                 .Index(t => t.ApplicationUser_Id);
             
+            CreateTable(
+                "dbo.PlayerMatch",
+                c => new
+                    {
+                        Player_Id = c.Int(nullable: false),
+                        Match_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.Player_Id, t.Match_Id })
+                .ForeignKey("dbo.Player", t => t.Player_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Match", t => t.Match_Id, cascadeDelete: true)
+                .Index(t => t.Player_Id)
+                .Index(t => t.Match_Id);
+            
         }
         
         public override void Down()
@@ -163,25 +160,25 @@ namespace Rival.Data.Migrations
             DropForeignKey("dbo.IdentityUserClaim", "ApplicationUser_Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserRole", "IdentityRole_Id", "dbo.IdentityRole");
             DropForeignKey("dbo.Match", "Winner_Id", "dbo.MatchPlayer");
-            DropForeignKey("dbo.Match", "PlayerTwo_MatchPlayerId", "dbo.MatchPlayerRecord");
-            DropForeignKey("dbo.Match", "PlayerOne_MatchPlayerId", "dbo.MatchPlayerRecord");
+            DropForeignKey("dbo.PlayerMatch", "Match_Id", "dbo.Match");
+            DropForeignKey("dbo.PlayerMatch", "Player_Id", "dbo.Player");
             DropForeignKey("dbo.Match", "Court_Id", "dbo.Court");
+            DropIndex("dbo.PlayerMatch", new[] { "Match_Id" });
+            DropIndex("dbo.PlayerMatch", new[] { "Player_Id" });
             DropIndex("dbo.IdentityUserLogin", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserClaim", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserRole", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserRole", new[] { "IdentityRole_Id" });
             DropIndex("dbo.Match", new[] { "Winner_Id" });
-            DropIndex("dbo.Match", new[] { "PlayerTwo_MatchPlayerId" });
-            DropIndex("dbo.Match", new[] { "PlayerOne_MatchPlayerId" });
             DropIndex("dbo.Match", new[] { "Court_Id" });
+            DropTable("dbo.PlayerMatch");
             DropTable("dbo.IdentityUserLogin");
             DropTable("dbo.IdentityUserClaim");
             DropTable("dbo.ApplicationUser");
             DropTable("dbo.IdentityUserRole");
             DropTable("dbo.IdentityRole");
-            DropTable("dbo.Player");
             DropTable("dbo.MatchPlayer");
-            DropTable("dbo.MatchPlayerRecord");
+            DropTable("dbo.Player");
             DropTable("dbo.Match");
             DropTable("dbo.Court");
         }

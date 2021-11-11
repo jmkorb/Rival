@@ -13,6 +13,7 @@ namespace Rival.WebMVC.Controllers
     [Authorize]
     public class MatchController : Controller
     {
+        private ApplicationDbContext ctx = new ApplicationDbContext();
         // GET: Note
         public ActionResult Index()
         {
@@ -26,12 +27,16 @@ namespace Rival.WebMVC.Controllers
         // GET: Create
         public ActionResult Create()
         {
+            ViewBag.PlayerTwo = new SelectList(ctx.Players, "Id", "FullName");
+            ViewBag.Court = new SelectList(ctx.Courts, "Id", "Location");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(MatchCreate model)
         {
+            
+
             if (!ModelState.IsValid) return View(model);
 
             var service = CreateMatchService();
@@ -44,7 +49,11 @@ namespace Rival.WebMVC.Controllers
 
             ModelState.AddModelError("", "Match could not be created.");
 
+            ViewBag.PlayerTwo = new SelectList(ctx.Players, "Id", "FullName", model.PlayerTwoId);
+            ViewBag.Court = new SelectList(ctx.Courts, "Id", "Location", model.CourtId);
+
             return View(model);
+
         }
 
         public ActionResult Details(int id)

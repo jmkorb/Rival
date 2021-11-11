@@ -1,4 +1,5 @@
 ﻿using Rival.Data;
+using Rival.Models.Matches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace Rival.Models.Players
         public PlayerAvailability Availability { get; set; }
         public PreferredSetNumber PreferredSetNumber { get; set; } 
         //public MatchDetail LastMatchPlayed { get; set; }
-        //public List<MatchDetail> MatchesPlayed { get; set; }
+        public ICollection<Match> MatchesPlayed { get; set; }
         //public string Record { get; set; }
         public int? SportsmanshipRating { get; set; }
     }
