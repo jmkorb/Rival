@@ -97,7 +97,7 @@ namespace Rival.WebMVC.Controllers
             if (service.EditMatch(model))
             {
                 TempData["SaveResult"] = "Your match was updated.";
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = id });
             }
 
             ModelState.AddModelError("", "Your match could not be updated.");

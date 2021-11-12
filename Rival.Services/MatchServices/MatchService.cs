@@ -94,8 +94,8 @@ namespace Rival.Services.MatchServices
                                 new MatchListItem
                                 {
                                     MatchId = e.Id,
-                                    PlayerOne = e.SetOfPlayers.ElementAt(0),
-                                    PlayerTwo = e.SetOfPlayers.ElementAt(1),
+                                    PlayerOne = e.SetOfPlayers.ElementAt(1),
+                                    PlayerTwo = e.SetOfPlayers.ElementAt(0),
                                     Date = e.Date
                                 }
                         );
@@ -115,8 +115,8 @@ namespace Rival.Services.MatchServices
                 return new MatchDetail
                 {
                     MatchId = entity.Id,
-                    PlayerOne = entity.SetOfPlayers.ElementAt(0),
-                    PlayerTwo = entity.SetOfPlayers.ElementAt(1),
+                    PlayerOne = entity.SetOfPlayers.ElementAt(1),
+                    PlayerTwo = entity.SetOfPlayers.ElementAt(0),
                     Date = entity.Date,
                     Court = entity.Court,
                     FinalScore = entity.FinalScore

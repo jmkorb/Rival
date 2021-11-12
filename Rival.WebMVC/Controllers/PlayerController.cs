@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Rival.Data;
 using Rival.Models.PlayerModels;
 using Rival.Models.Players;
 using Rival.Services.PlayerServices;
@@ -13,6 +14,7 @@ namespace Rival.WebMVC.Controllers
     [Authorize]
     public class PlayerController : Controller
     {
+        private ApplicationDbContext ctx = new ApplicationDbContext();
         // GET: Player
         public ActionResult Index()
         {
@@ -25,6 +27,13 @@ namespace Rival.WebMVC.Controllers
         // GET Player/Create
         public ActionResult Create()
         {
+            //In case a user navigated to Player/Create, if they already have on they cannot create another
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            if (ctx.Players.Where(e => e.UserId == userId).Count() == 1)
+            {
+                ModelState.AddModelError("", "Your player is already created");
+                return RedirectToAction("Edit");
+            }
             return View();
         }
 
@@ -32,7 +41,17 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PlayerCreate model)
         {
+
             if (!ModelState.IsValid) return View(model);
+
+            var userId = Guid.Parse(User.Identity.GetUserId());
+
+            // In case a user navigated to Player/Create, if they already have on they cannot create another
+            if (ctx.Players.Where(e => e.UserId == userId).Count() == 1)
+            {
+                ModelState.AddModelError("", "Your player is already created");
+                return RedirectToAction("Edit");
+            }
 
             var service = CreatePlayerService();
 
@@ -48,10 +67,13 @@ namespace Rival.WebMVC.Controllers
         }
 
         // GET Edit
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             var service = CreatePlayerService();
-            var detail = service.GetPlayerById(id);
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var currentPlayer = ctx.Players.Single(e => e.UserId == userId);
+            var detail = service.GetPlayerById(currentPlayer.Id);
+
             var model = new PlayerEdit
             {
                 PlayerId = detail.PlayerId,
@@ -69,11 +91,14 @@ namespace Rival.WebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, PlayerEdit model)
+        public ActionResult Edit(PlayerEdit model)
         {
             if (!ModelState.IsValid) return View(model);
 
-            if(model.PlayerId != id)
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var currentPlayer = ctx.Players.Single(e => e.UserId == userId);
+
+            if (model.PlayerId != currentPlayer.Id)
             {
                 ModelState.AddModelError("", "Id Mismatch");
                 return View(model);
