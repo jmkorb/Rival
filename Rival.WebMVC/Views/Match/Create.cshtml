@@ -19,7 +19,7 @@
             <div class = "control-label col-md-2" >Your Opponent</div>
             <div class="col-md-10">
                 @Html.LabelFor(model => model.PlayerTwoId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.DropDownList("Player", (ViewBag.PlayerTwo as SelectList), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("PlayerTwoId", (ViewBag.PlayerTwo as SelectList), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PlayerTwoId, "", new { @class = "text-danger" })
             </div>
         </div>    
@@ -35,7 +35,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CourtId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Court", (ViewBag.Court as SelectList), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("CourtId", (ViewBag.Court as SelectList), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CourtId, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -40,7 +40,9 @@ namespace Rival.Services.MatchServices
                 };
 
                 ctx.Matches.Add(entity);
-                return ctx.SaveChanges() == 1;
+                var save = ctx.SaveChanges();
+
+                return save >= 1;
             }
         }
 
@@ -85,15 +87,15 @@ namespace Rival.Services.MatchServices
             {
                 var query =
                     ctx
-                        .Matches
+                        .Matches.AsEnumerable()
                         .Where(e => e.CreatorId == _userId)
                         .Select(
                             e =>
                                 new MatchListItem
                                 {
                                     MatchId = e.Id,
-                                    PlayerOne = e.SetOfPlayers[0],
-                                    PlayerTwo = e.SetOfPlayers[1],
+                                    PlayerOne = e.SetOfPlayers.ElementAt(0),
+                                    PlayerTwo = e.SetOfPlayers.ElementAt(1),
                                     Date = e.Date
                                 }
                         );
@@ -113,8 +115,8 @@ namespace Rival.Services.MatchServices
                 return new MatchDetail
                 {
                     MatchId = entity.Id,
-                    PlayerOne = entity.SetOfPlayers[0],
-                    PlayerTwo = entity.SetOfPlayers[1],
+                    PlayerOne = entity.SetOfPlayers.ElementAt(0),
+                    PlayerTwo = entity.SetOfPlayers.ElementAt(1),
                     Date = entity.Date,
                     Court = entity.Court,
                     FinalScore = entity.FinalScore

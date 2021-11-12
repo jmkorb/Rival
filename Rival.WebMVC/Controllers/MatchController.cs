@@ -27,8 +27,8 @@ namespace Rival.WebMVC.Controllers
         // GET: Create
         public ActionResult Create()
         {
-            ViewBag.PlayerTwo = new SelectList(ctx.Players, "Id", "FullName");
-            ViewBag.Court = new SelectList(ctx.Courts, "Id", "Location");
+            ViewBag.PlayerTwoId = new SelectList(ctx.Players, "Id", "FullName");
+            ViewBag.CourtId = new SelectList(ctx.Courts, "Id", "Location");
             return View();
         }
         [HttpPost]
