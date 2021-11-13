@@ -92,7 +92,7 @@ namespace Rival.Services.PlayerServices
             }
         }
         public PlayerDetail GetPlayerById(int id)
-        {
+        { 
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =

@@ -36,7 +36,7 @@ namespace Rival.WebMVC.Controllers
             var userId = Guid.Parse(User.Identity.GetUserId());
             if (ctx.Players.Where(e => e.UserId == userId).Count() == 1)
             {
-                ModelState.AddModelError("", "Your player is already created");
+                ViewBag.Message = "Your player is already created";
                 return RedirectToAction("Edit");
             }
             return View();
@@ -55,7 +55,7 @@ namespace Rival.WebMVC.Controllers
             // In case a user navigated to Player/Create, if they already have on they cannot create another
             if (ctx.Players.Where(e => e.UserId == userId).Count() == 1)
             {
-                ModelState.AddModelError("", "Your player is already created");
+                ViewBag.Message = "Your player is already created";
                 return RedirectToAction("Edit");
             }
 

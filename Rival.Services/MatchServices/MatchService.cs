@@ -100,7 +100,7 @@ namespace Rival.Services.MatchServices
                 return query.ToArray();
             }
         }
-        public IEnumerable<MatchListItem> GetMatches(int id)
+        public IEnumerable<MatchListItem> GetUserMatches(int id)
         {
             //var id = Guid.Parse(userId);
             using (var ctx = new ApplicationDbContext())
