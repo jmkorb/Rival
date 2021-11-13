@@ -14,5 +14,6 @@ namespace Rival.Models.Courts
         [MaxLength(50, ErrorMessage ="Your location cannot be longer than 50 characters")]
         public string Location { get; set; }
         public Condition Condition { get; set; }
+        public string UserId { get; set; }
     }
 }

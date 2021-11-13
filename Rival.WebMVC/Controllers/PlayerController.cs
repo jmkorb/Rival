@@ -15,12 +15,17 @@ namespace Rival.WebMVC.Controllers
     public class PlayerController : Controller
     {
         private ApplicationDbContext ctx = new ApplicationDbContext();
+        private readonly IPlayerService _service;
+
+        public PlayerController(IPlayerService service)
+        {
+            _service = service;
+        }
+
         // GET: Player
         public ActionResult Index()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new PlayerService(userId);
-            var model = service.GetPlayers();
+            var model = _service.GetPlayers();
 
             return View(model);
         }
@@ -46,6 +51,7 @@ namespace Rival.WebMVC.Controllers
 
             var userId = Guid.Parse(User.Identity.GetUserId());
 
+            model.UserId = User.Identity.GetUserId();
             // In case a user navigated to Player/Create, if they already have on they cannot create another
             if (ctx.Players.Where(e => e.UserId == userId).Count() == 1)
             {
@@ -53,9 +59,7 @@ namespace Rival.WebMVC.Controllers
                 return RedirectToAction("Edit");
             }
 
-            var service = CreatePlayerService();
-
-            if (service.CreatePlayer(model))
+            if (_service.CreatePlayer(model))
             {
                 TempData["SaveResult"] = "Your player was created.";
                 return RedirectToAction("Index");
@@ -69,10 +73,9 @@ namespace Rival.WebMVC.Controllers
         // GET Edit
         public ActionResult Edit()
         {
-            var service = CreatePlayerService();
             var userId = Guid.Parse(User.Identity.GetUserId());
             var currentPlayer = ctx.Players.Single(e => e.UserId == userId);
-            var detail = service.GetPlayerById(currentPlayer.Id);
+            var detail = _service.GetPlayerById(currentPlayer.Id);
 
             var model = new PlayerEdit
             {
@@ -104,9 +107,9 @@ namespace Rival.WebMVC.Controllers
                 return View(model);
             }
 
-            var service = CreatePlayerService();
+            model.UserId = User.Identity.GetUserId();
 
-            if (service.EditPlayer(model))
+            if (_service.EditPlayer(model))
             {
                 TempData["SaveResult"] = "Your player was updated.";
                 return RedirectToAction("Index");
@@ -118,8 +121,7 @@ namespace Rival.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            var service = CreatePlayerService();
-            var model = service.GetPlayerById(id);
+            var model = _service.GetPlayerById(id);
 
             return View(model);
         }
@@ -127,8 +129,7 @@ namespace Rival.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            var service = CreatePlayerService();
-            var model = service.GetPlayerById(id);
+            var model = _service.GetPlayerById(id);
 
             return View(model);
         }
@@ -138,19 +139,11 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePlayer(int id)
         {
-            var service = CreatePlayerService();
-            service.DeletePlayer(id);
+            _service.DeletePlayer(id, User.Identity.GetUserId());
 
             TempData["SaveResult"] = "Your player was deleted";
 
             return RedirectToAction("Index");
-        }
-
-        private PlayerService CreatePlayerService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new PlayerService(userId);
-            return service;
         }
     }
 }

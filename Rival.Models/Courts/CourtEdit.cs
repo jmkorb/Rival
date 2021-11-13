@@ -12,5 +12,6 @@ namespace Rival.Models.Courts
         public int CourtId { get; set; }
         public string Location { get; set; }
         public Condition Condition { get; set; }
+        public string UserId { get; set; }
     }
 }

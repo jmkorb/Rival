@@ -7,20 +7,15 @@ using System.Linq;
 
 namespace Rival.Services.PlayerServices
 {
-    public class PlayerService
+    public class PlayerService : IPlayerService
     {
-        private readonly Guid _userId;
 
-        public PlayerService(Guid userId)
-        {
-            _userId = userId;
-        }
 
         public bool CreatePlayer(PlayerCreate model)
         {
             var entity = new Player()
             {
-                UserId = _userId,
+                UserId = Guid.Parse(model.UserId),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 City = model.City,
@@ -44,7 +39,7 @@ namespace Rival.Services.PlayerServices
                 var entity =
                     ctx
                         .Players
-                        .Single(e => e.Id == model.PlayerId && e.UserId == _userId);
+                        .Single(e => e.Id == model.PlayerId);
 
                 entity.FirstName = model.FirstName;
                 entity.LastName = model.LastName;
@@ -57,7 +52,7 @@ namespace Rival.Services.PlayerServices
             }
         }
 
-        public bool DeletePlayer(int id)
+        public bool DeletePlayer(int id, string userId)
         {
             using (var ctx = new ApplicationDbContext())
             {

@@ -27,5 +27,6 @@ namespace Rival.Models.Players
         [Required]
         public PlayerAvailability Availability { get; set; }
         public PreferredSetNumber PreferredSetNumber { get; set; }
+        public string UserId { get; set; }
     }
 }

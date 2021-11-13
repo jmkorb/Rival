@@ -8,23 +8,18 @@ using System.Threading.Tasks;
 
 namespace Rival.Services.MatchServices
 {
-    public class MatchService
+    public class MatchService : IMatchService
     {
-        private readonly Guid _userId;
-
-        public MatchService(Guid userId)
-        {
-            _userId = userId;
-        }
 
         public bool CreateMatch(MatchCreate model)
         {
-            using (var ctx = new ApplicationDbContext()) 
+            using (var ctx = new ApplicationDbContext())
             {
+                var userId = Guid.Parse(model.UserId);
                 var currentUser =
                     ctx
                         .Players
-                        .Single(e => e.UserId == _userId);
+                        .Single(e => e.UserId == userId);
 
                 List<Player> players = new List<Player>();
                 players.Add(currentUser);
@@ -33,7 +28,7 @@ namespace Rival.Services.MatchServices
 
                 var entity = new Match()
                 {
-                    CreatorId = _userId,
+                    CreatorId = Guid.Parse(model.UserId),
                     SetOfPlayers = players,
                     Date = model.Date,
                     CourtId = model.CourtId
@@ -50,11 +45,12 @@ namespace Rival.Services.MatchServices
         {
             using (var ctx = new ApplicationDbContext())
             {
+                var userId = Guid.Parse(model.UserId);
                 var entity =
                     ctx
                         .Matches
-                        .Where(e => e.CreatorId == _userId)
-                        .Single(e => e.Id == model.MatchId && e.CreatorId == _userId);
+                        .Where(e => e.CreatorId == userId)
+                        .Single(e => e.Id == model.MatchId && e.CreatorId == userId);
 
                 entity.Id = model.MatchId;
                 entity.Date = model.Date;
@@ -66,14 +62,16 @@ namespace Rival.Services.MatchServices
             }
         }
 
-        public bool DeleteMatch(int id)
+        public bool DeleteMatch(int id, string userId)
         {
+            var creatorId = Guid.Parse(userId);
             using (var ctx = new ApplicationDbContext())
             {
+
                 var entity =
                     ctx
                         .Matches
-                        .Single(e => e.Id == id && e.CreatorId == _userId);
+                        .Single(e => e.Id == id && e.CreatorId == creatorId);
 
                 ctx.Matches.Remove(entity);
 
@@ -88,7 +86,6 @@ namespace Rival.Services.MatchServices
                 var query =
                     ctx
                         .Matches.AsEnumerable()
-                        .Where(e => e.CreatorId == _userId)
                         .Select(
                             e =>
                                 new MatchListItem
@@ -103,6 +100,39 @@ namespace Rival.Services.MatchServices
                 return query.ToArray();
             }
         }
+        public IEnumerable<MatchListItem> GetMatches(int id)
+        {
+            //var id = Guid.Parse(userId);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                        .Matches.AsEnumerable();
+
+                var matches = new List<MatchListItem>();
+
+                foreach (var match in query)
+                {
+                    var players = match.SetOfPlayers;
+                    foreach(var player in players)
+                    {
+                        if (player.Id == id)
+                        {
+                            var addItem = new MatchListItem
+                            {
+                                MatchId = match.Id,
+                                PlayerOne = match.SetOfPlayers.ElementAt(1),
+                                PlayerTwo = match.SetOfPlayers.ElementAt(0),
+                                Date = match.Date
+                            };
+                            matches.Add(addItem);
+                        }
+                    }
+                }
+
+                return matches.ToArray();
+            }
+        }
         public MatchDetail GetMatchById(int id)
         {
             using (var ctx = new ApplicationDbContext())
@@ -110,7 +140,7 @@ namespace Rival.Services.MatchServices
                 var entity =
                     ctx
                         .Matches
-                        .Single(e => e.Id == id && e.CreatorId == _userId);
+                        .Single(e => e.Id == id);
 
                 return new MatchDetail
                 {

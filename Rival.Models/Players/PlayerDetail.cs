@@ -23,5 +23,6 @@ namespace Rival.Models.Players
         public ICollection<Match> MatchesPlayed { get; set; }
         //public string Record { get; set; }
         public int? SportsmanshipRating { get; set; }
+        public string UserId { get; set; }
     }
 }

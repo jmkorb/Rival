@@ -14,12 +14,17 @@ namespace Rival.WebMVC.Controllers
     public class MatchController : Controller
     {
         private ApplicationDbContext ctx = new ApplicationDbContext();
-        // GET: Note
+        private readonly IMatchService _service;
+
+        public MatchController(IMatchService service)
+        {
+            _service = service;
+        }
+
+        // GET: Match
         public ActionResult Index()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new MatchService(userId);
-            var model = service.GetMatches();
+            var model = _service.GetMatches();
 
             return View(model);
         }
@@ -35,13 +40,11 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MatchCreate model)
         {
-            
-
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateMatchService();
+            model.UserId = User.Identity.GetUserId();
 
-            if (service.CreateMatch(model))
+            if (_service.CreateMatch(model))
             {
                 TempData["SaveResult"] = "Your match was created. Select edit to add winner and final score.";
                 return RedirectToAction("Index");
@@ -58,16 +61,14 @@ namespace Rival.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            var svc = CreateMatchService();
-            var model = svc.GetMatchById(id);
+            var model = _service.GetMatchById(id);
 
             return View(model);
         }
 
         public ActionResult Edit(int id)
         {
-            var service = CreateMatchService();
-            var detail = service.GetMatchById(id);
+            var detail = _service.GetMatchById(id);
             var model =
                 new MatchEdit
                 {
@@ -92,9 +93,9 @@ namespace Rival.WebMVC.Controllers
                 return View(model);
             }
 
-            var service = CreateMatchService();
+            model.UserId = User.Identity.GetUserId();
 
-            if (service.EditMatch(model))
+            if (_service.EditMatch(model))
             {
                 TempData["SaveResult"] = "Your match was updated.";
                 return RedirectToAction("Details", new { id = id });
@@ -107,8 +108,7 @@ namespace Rival.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            var svc = CreateMatchService();
-            var model = svc.GetMatchById(id);
+            var model = _service.GetMatchById(id);
 
             return View(model);
         }
@@ -118,20 +118,11 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteMatch(int id)
         {
-            var service = CreateMatchService();
-
-            service.DeleteMatch(id);
+            _service.DeleteMatch(id, User.Identity.GetUserId());
 
             TempData["SaveResult"] = "Your note was deleted";
 
             return RedirectToAction("Index");
-        }
-
-        private MatchService CreateMatchService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new MatchService(userId);
-            return service;
         }
     }
 }

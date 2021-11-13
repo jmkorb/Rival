@@ -16,5 +16,6 @@ namespace Rival.Models.Matches
         public Court Court { get; set; }
         public string Winner { get; set; }
         public string FinalScore { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace Rival.Services.CourtServices
 {
-    public class CourtService
+    public class CourtService : ICourtService
     {
-        private readonly Guid _userId;
-
-        public CourtService(Guid userId)
-        {
-            _userId = userId;
-        }
 
         public bool CreateCourt(CourtCreate model)
         {

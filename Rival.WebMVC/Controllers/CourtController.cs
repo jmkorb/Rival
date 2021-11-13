@@ -12,11 +12,11 @@ namespace Rival.WebMVC.Controllers
     [Authorize]
     public class CourtController : Controller
     {
+        private readonly ICourtService _service;
         // GET: Note
         public ActionResult Index()
         {
-            var service = CreateCourtService();
-            var model = service.GetCourts();
+            var model = _service.GetCourts();
 
             return View(model);
         }
@@ -35,9 +35,9 @@ namespace Rival.WebMVC.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
-            var service = CreateCourtService();
+            model.UserId = User.Identity.GetUserId();
 
-            if (service.CreateCourt(model))
+            if (_service.CreateCourt(model))
             {
                 TempData["SaveResult"] = "Your note was created.";
                 return RedirectToAction("Index");
@@ -50,8 +50,7 @@ namespace Rival.WebMVC.Controllers
 
         public ActionResult Details(int id)
         {
-            var svc = CreateCourtService();
-            var model = svc.GetCourtById(id);
+            var model = _service.GetCourtById(id);
 
             return View(model);
         }
@@ -59,8 +58,7 @@ namespace Rival.WebMVC.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
-            var service = CreateCourtService();
-            var detail = service.GetCourtById(id);
+            var detail = _service.GetCourtById(id);
             var model =
                 new CourtEdit
                 {
@@ -84,9 +82,9 @@ namespace Rival.WebMVC.Controllers
                 return View(model);
             }
 
-            var service = CreateCourtService();
+            model.UserId = User.Identity.GetUserId();
 
-            if (service.EditCourt(model))
+            if (_service.EditCourt(model))
             {
                 TempData["SaveResult"] = "The court was updated.";
                 return RedirectToAction("Index");
@@ -100,8 +98,7 @@ namespace Rival.WebMVC.Controllers
         [ActionName("Delete")]
         public ActionResult Delete(int id)
         {
-            var svc = CreateCourtService();
-            var model = svc.GetCourtById(id);
+            var model = _service.GetCourtById(id);
 
             return View(model);
         }
@@ -112,20 +109,11 @@ namespace Rival.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCourt(int id)
         {
-            var service = CreateCourtService();
-
-            service.DeleteCourt(id);
+            _service.DeleteCourt(id);
 
             TempData["SaveResult"] = "Your court was deleted";
 
             return RedirectToAction("Index");
-        }
-
-        private CourtService CreateCourtService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new CourtService(userId);
-            return service;
         }
     }
 }

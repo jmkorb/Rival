@@ -1,6 +1,8 @@
 using Autofac;
 using Autofac.Integration.Mvc;
+using Rival.Services.CourtServices;
 using Rival.Services.MatchServices;
+using Rival.Services.PlayerServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +38,15 @@ namespace Rival.WebMVC
 
             // OPTIONAL: Enable action method parameter injection (RARE).
             //builder.InjectActionInvoker();
-            //builder.RegisterType<MatchService>().As<IMatchService>();
+
+            //Registers implementation 
+            builder.RegisterType<PlayerService>().As<IPlayerService>();
+            
+
+            builder.RegisterType<MatchService>().As<IMatchService>();
+            
+            builder.RegisterType<CourtService>().As<ICourtService>();
+
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));

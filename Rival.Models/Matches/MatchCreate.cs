@@ -13,5 +13,6 @@ namespace Rival.Models.Matches
         public int PlayerTwoId { get; set; }
         public DateTime Date { get; set; }
         public int CourtId { get; set; }
+        public string UserId { get; set; }
     }
 }
