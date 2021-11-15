@@ -1,80 +1,75 @@
 ﻿@model Rival.Models.Players.PlayerDetail
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete Player";
 }
 
-<h2>Delete</h2>
+<h2 style="text-align: center; margin: 25px;">Are you sure you want to delete this player?</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>PlayerDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerId)
-        </dt>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="text-center">
+        <p><input type="submit" value="Yes" class="btn btn-default" /></p>
+        <p><a href="@Url.Action("Details", new { id = Model.PlayerId })" class="text-decoration-none" style="color: #212529;">No</a></p>
+    </div>
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.PlayerId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateJoined)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateJoined)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SportsmanshipRating)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SportsmanshipRating)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+<div class="container text-center">
+    <div class="row" style="margin: 30px;">
+        <div class="col-sm"></div>
+        <div class="col-sm">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header" style="text-align: center; font-size: 20px;">
+                    <b>Information</b>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Preferred Set Number: </b>@Html.DisplayFor(modelitem => Model.PreferredSetNumber)</li>
+                    <li class="list-group-item"><b>Location: </b>@Html.DisplayFor(modelitem => Model.Location)</li>
+                    <li class="list-group-item"><b>Availability: </b>@Html.DisplayFor(modelitem => Model.Availability)</li>
+                </ul>
+            </div>
         </div>
-    }
+        <div class="col-sm"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg">
+            <div class="card panel panel-default">
+                <div class="panel-heading card-header" style="text-align:center; font-size: 20px;"><b>@Html.DisplayFor(model => model.FirstName)'s Previous Matches</b></div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Winner</th>
+                                <th>Final Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var match in Model.MatchesPlayed)
+                            {
+                                <tr>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("Details", "Match", new { id = match.Id })">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td>@match.SetOfPlayers.Single(e => e.Id != Model.PlayerId).FullName</td>
+                                    <td>@match.Date.ToShortDateString()</td>
+                                    <td>@match.Winner</td>
+                                    <td>@match.FinalScore</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

@@ -4,59 +4,51 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2 class="text-center">Edit this Match</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal" style="margin: 0 auto; width:750px;">
-    <span></span>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.MatchId)
+    <div class="form-horizontal" style="margin: 0 auto; width:750px;">
+        <span></span>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.MatchId)
 
 
-    <div class="form-group">
-        Date
-        <div class="col" style="margin: 10px 0 20px 0;">
-            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        <div class="form-group">
+            Date
+            <div class="col" style="margin: 10px 0 20px 0;">
+                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>        
+        <div class="form-group">
+            Winner
+            <div class="col" style="margin: 10px 0 20px 0;">
+                @Html.EditorFor(model => model.Winner, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Winner, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        Winner
-        <div class="col" style="margin: 10px 0 20px 0;">
-            @Html.EditorFor(model => model.Winner, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Winner, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="form-group">
-        Final Score
-        <div class="col" style="margin: 10px 0 20px 0;">
-            @Html.EditorFor(model => model.FinalScore, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.FinalScore, "", new { @class = "text-danger" })
+        <div class="form-group">
+            Final Score
+            <div class="col" style="margin: 10px 0 20px 0;">
+                @Html.EditorFor(model => model.FinalScore, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FinalScore, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="col-md-offset-2 col-md-10 btn btn-block btn-primary" style="width:750px;">
+                <input type="button" value="Save" style="color: #fff" class="btn btn-default" />
+            </button>
+        </div>
+        <div class="text-center" style="margin: 20px;">
+            <a href="@Url.Action("Delete", new { id = Model.MatchId })">Delete this Match?</a>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="control-label col-md-2">Court</div>
-        <div class="col" style="margin: 10px 0 20px 0;">
-            @Html.DropDownList("CourtId", (ViewBag.Court as SelectList), htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.CourtId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <button class="col-md-offset-2 col-md-10 btn btn-block btn-primary" style="width:750px;">
-            <input type="button" value="Save" style="color: #fff" class="btn btn-default" />
-        </button>
-    </div>
-    <div class="text-center" style="margin: 20px;">
-        <a href="@Url.Action("Delete", new { id = Model.MatchId })">Delete this Court?</a>
-    </div>
-</div>
 }
 
 <div>

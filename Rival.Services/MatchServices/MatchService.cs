@@ -148,6 +148,7 @@ namespace Rival.Services.MatchServices
                     PlayerOne = entity.SetOfPlayers.ElementAt(1),
                     PlayerTwo = entity.SetOfPlayers.ElementAt(0),
                     Date = entity.Date,
+                    Winner = entity.Winner,
                     Court = entity.Court,
                     FinalScore = entity.FinalScore
                 };
