@@ -1,60 +1,40 @@
 ﻿@model IEnumerable<Rival.Models.PlayerModels.PlayerListItem>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Current Players";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PlayerId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FullName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateJoined)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SportsmanshipRating)
-            </th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlayerId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateJoined)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SportsmanshipRating)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.PlayerId })
-            </td>
-        </tr>
-    }
-    
-    </table>
-</body>
-</html>
+<div row>
+    <div class="card panel panel-default text-center">
+        <div class="panel-heading card-header" style="font-size: 20px;"><b>Current Rival Players</b></div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>When They Joined</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var player in Model)
+                    {
+                        <tr>
+                            <td style="text-align:center">
+                                <a style="color: #18bc9c;" href="@Url.Action("Details", new { id = player.PlayerId })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </a>
+                            </td>
+                            <td>@player.FullName</td>
+                            <td>@player.Location</td>
+                            <td>@player.DateJoined.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

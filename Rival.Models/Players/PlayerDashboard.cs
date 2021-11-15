@@ -1,5 +1,4 @@
 ﻿using Rival.Data;
-using Rival.Models.Matches;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Rival.Models.Players
 {
-    public class PlayerDetail
+    public class PlayerDashboard
     {
         public int PlayerId { get; set; }
         public string FirstName { get; set; }
@@ -19,10 +18,10 @@ namespace Rival.Models.Players
         public State State { get; set; }
         public string Location { get { return City + ", " + State; } }
         public PlayerAvailability Availability { get; set; }
-        public PreferredSetNumber PreferredSetNumber { get; set; } 
+        public PreferredSetNumber PreferredSetNumber { get; set; }
         //public MatchDetail LastMatchPlayed { get; set; }
-
         public virtual IEnumerable<Match> MatchesPlayed { get; set; }
+        public virtual IEnumerable<Player> PossibleMatchups { get; set; }
         //public string Record { get; set; }
         public int? SportsmanshipRating { get; set; }
         public string UserId { get; set; }

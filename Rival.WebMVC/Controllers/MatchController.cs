@@ -32,7 +32,8 @@ namespace Rival.WebMVC.Controllers
         // GET: Create
         public ActionResult Create()
         {
-            ViewBag.PlayerTwoId = new SelectList(ctx.Players, "Id", "FullName");
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            ViewBag.PlayerTwoId = new SelectList(ctx.Players.Where(e => e.UserId != userId), "Id", "FullName");
             ViewBag.CourtId = new SelectList(ctx.Courts, "Id", "Location");
             return View();
         }
@@ -42,6 +43,7 @@ namespace Rival.WebMVC.Controllers
         {
             if (!ModelState.IsValid) return View(model);
 
+            var userId = Guid.Parse(User.Identity.GetUserId());
             model.UserId = User.Identity.GetUserId();
 
             if (_service.CreateMatch(model))
@@ -52,7 +54,7 @@ namespace Rival.WebMVC.Controllers
 
             ModelState.AddModelError("", "Match could not be created.");
 
-            ViewBag.PlayerTwo = new SelectList(ctx.Players, "Id", "FullName", model.PlayerTwoId);
+            ViewBag.PlayerTwo = new SelectList(ctx.Players.Where(e => e.UserId != userId), "Id", "FullName", model.PlayerTwoId);
             ViewBag.Court = new SelectList(ctx.Courts, "Id", "Location", model.CourtId);
 
             return View(model);

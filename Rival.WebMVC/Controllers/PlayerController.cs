@@ -29,6 +29,17 @@ namespace Rival.WebMVC.Controllers
 
             return View(model);
         }
+
+        public ActionResult Dashboard()
+        {
+            var userId = Guid.Parse(User.Identity.GetUserId());
+            var userPlayer = ctx.Players.Single(e => e.UserId == userId);
+
+            var dashboardModel = _service.GetPlayerDashboard(userPlayer.Id, User.Identity.GetUserId());
+
+            return View(dashboardModel);
+        }
+
         // GET Player/Create
         public ActionResult Create()
         {

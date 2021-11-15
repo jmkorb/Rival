@@ -113,6 +113,7 @@
     <Compile Include="Matches\MatchCreate.cs" />
     <Compile Include="Matches\MatchDetail.cs" />
     <Compile Include="Players\PlayerCreate.cs" />
+    <Compile Include="Players\PlayerDashboard.cs" />
     <Compile Include="Players\PlayerDetail.cs" />
     <Compile Include="Players\PlayerEdit.cs" />
     <Compile Include="Players\PlayerListItem.cs" />

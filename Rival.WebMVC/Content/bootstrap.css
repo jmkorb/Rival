@@ -241,12 +241,12 @@ sup {
 }
 
 a {
-  color: #18bc9c;
-  text-decoration: underline;
+    color: #18bc9c;
+    text-decoration: underline;
 }
 
 a:hover {
-  color: #13967d;
+    color: #18bc9c;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3650,12 +3650,12 @@ fieldset:disabled .btn {
 
 .btn-link {
   font-weight: 400;
-  color: #18bc9c;
+  color: #fff;
   text-decoration: underline;
 }
 
 .btn-link:hover {
-  color: #13967d;
+    color: #18bc9c;
 }
 
 .btn-link:disabled, .btn-link.disabled {

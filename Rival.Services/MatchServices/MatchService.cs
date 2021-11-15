@@ -153,5 +153,15 @@ namespace Rival.Services.MatchServices
                 };
             }
         }
+        public IEnumerable<Match> MatchesByDateDesc(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query = ctx.Matches.Where(e => e.SetOfPlayers[0].Id == id || e.SetOfPlayers[1].Id == id);
+                var descendingQuery = query.OrderByDescending(d => d.Date);
+
+                return descendingQuery;
+            }
+        }
     }
 }

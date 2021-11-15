@@ -1,0 +1,112 @@
+﻿@model Rival.Models.Players.PlayerDashboard
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2 class="text-center" style="margin-bottom: 40px; margin-top: 35px;">Your Player Dashboard</h2>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-6 col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-header" style="text-align: center; font-size: 20px;">
+                    <b>Information</b>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Name: </b> @Html.DisplayFor(modelitem => Model.FullName)</li>
+                    <li class="list-group-item"><b>Preferred Set Number: </b>@Html.DisplayFor(modelitem => Model.PreferredSetNumber)</li>
+                    <li class="list-group-item"><b>Location: </b>@Html.DisplayFor(modelitem => Model.Location)</li>
+                    <li class="list-group-item"><b>Availability: </b>@Html.DisplayFor(modelitem => Model.Availability)</li>
+                    <li class="list-group-item"></li>
+                </ul>
+                <button class="btn btn-primary btn-block bg-primary" type="button" id="card-button">
+                    <a class="nav-link btn-link bg-primary" id="card-button" href="@Url.Action("Edit")">Edit</a>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <div class="card panel panel-default">
+                <div class="panel-heading card-header" style="font-size: 20px;"><b>Possible Matchups</b></div>
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Location</th>
+                                <th>Availability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var player in Model.PossibleMatchups)
+                            {
+                                <tr>
+                                    <td style="text-align:center">
+                                        <a href="@Url.Action("Details", new { id = player.Id })" style="color: #18bc9c;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td>@player.FullName</td>
+                                    <td>@player.Location</td>
+                                    <td>@player.Availability</td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                </div>
+                    <button class="btn btn-primary btn-block" type="button">
+                        <a class="nav-link" id="card-button" href="@Url.Action("Create", "Match")">New Match</a>
+                    </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<p></p>
+<hr style="margin:20px; margin-top:30px; margin-bottom:30px;"/>
+<div>
+</div>
+<div class="row">
+    <div class="col-xs-6">
+        <div class="card panel panel-default">
+            <div class="panel-heading card-header" style="text-align:center; font-size: 20px;"><b>Previous Matches</b></div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Winner</th>
+                            <th>Final Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var match in Model.MatchesPlayed)
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    <a style="color: #18bc9c;" href="@Url.Action("Details", "Match", new { id = match.Id })">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                            <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                                <td>@match.SetOfPlayers.Single(e => e.Id != Model.PlayerId).FullName</td>
+                                <td>@match.Date.ToShortDateString()</td>
+                                <td>@match.Winner</td>
+                                <td>@match.FinalScore</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,13 +7,13 @@ namespace Rival.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class removematchplayer : IMigrationMetadata
+    public sealed partial class redomigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(removematchplayer));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(redomigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111112107581_removematchplayer"; }
+            get { return "202111132126570_redomigration"; }
         }
         
         string IMigrationMetadata.Source

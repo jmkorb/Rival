@@ -17,18 +17,6 @@
         <dd>
             @Html.DisplayFor(model => model.MatchId)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerOne)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PlayerOne.FullName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PlayerTwo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PlayerTwo.FullName)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Date)
@@ -39,14 +27,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FinalScore)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FinalScore)
-        </dd>        
-        
-        <dt>
             @Html.DisplayNameFor(model => model.Winner)
         </dt>
 
@@ -54,9 +34,25 @@
             @Html.DisplayFor(model => model.Winner)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.FinalScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FinalScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MatchId }) |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

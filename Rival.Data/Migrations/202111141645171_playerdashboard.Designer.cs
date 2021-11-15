@@ -7,13 +7,13 @@ namespace Rival.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class first : IMigrationMetadata
+    public sealed partial class playerdashboard : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(first));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(playerdashboard));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111080213104_first"; }
+            get { return "202111141645171_playerdashboard"; }
         }
         
         string IMigrationMetadata.Source

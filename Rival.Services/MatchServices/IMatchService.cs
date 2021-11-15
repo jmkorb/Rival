@@ -1,4 +1,5 @@
-﻿using Rival.Models.Matches;
+﻿using Rival.Data;
+using Rival.Models.Matches;
 using System.Collections.Generic;
 
 namespace Rival.Services.MatchServices
@@ -10,6 +11,6 @@ namespace Rival.Services.MatchServices
         bool EditMatch(MatchEdit model);
         MatchDetail GetMatchById(int id);
         IEnumerable<MatchListItem> GetMatches();
-        //IEnumerable<MatchListItem> GetUserMatches(int id);
+        IEnumerable<Match> MatchesByDateDesc(int id);
     }
 }

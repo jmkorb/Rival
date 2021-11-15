@@ -1,4 +1,5 @@
-﻿using Rival.Models.PlayerModels;
+﻿using Rival.Data;
+using Rival.Models.PlayerModels;
 using Rival.Models.Players;
 using System.Collections.Generic;
 
@@ -11,5 +12,7 @@ namespace Rival.Services.PlayerServices
         bool EditPlayer(PlayerEdit model);
         PlayerDetail GetPlayerById(int id);
         IEnumerable<PlayerListItem> GetPlayers();
+        IEnumerable<Player> PlayersMatchingState(string userId);
+        PlayerDashboard GetPlayerDashboard(int id, string userId);
     }
 }

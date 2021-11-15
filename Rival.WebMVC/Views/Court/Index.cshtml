@@ -1,45 +1,32 @@
 ﻿@model IEnumerable<Rival.Models.Courts.CourtListItem>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Available Courts";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.CourtId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Condition)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourtId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Condition)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.CourtId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.CourtId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.CourtId })
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row">
+    <div class="col"></div>
+    <div class="col-8 card panel panel-default text-center">
+        <div class="panel-heading card-header" style="font-size: 20px;"><b>Available Courts</b></div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Location</th>
+                        <th>Quality of the Court (Scale 1-5)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var court in Model)
+                    {
+                        <tr>
+                            <td>@court.Location</td>
+                            <td>@court.Condition</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>

@@ -9,8 +9,6 @@ namespace Rival.Services.PlayerServices
 {
     public class PlayerService : IPlayerService
     {
-
-
         public bool CreatePlayer(PlayerCreate model)
         {
             var entity = new Player()
@@ -31,7 +29,6 @@ namespace Rival.Services.PlayerServices
                 return ctx.SaveChanges() == 1;
             }
         }
-
         public bool EditPlayer(PlayerEdit model)
         {
             using (var ctx = new ApplicationDbContext())
@@ -51,7 +48,6 @@ namespace Rival.Services.PlayerServices
                 return ctx.SaveChanges() == 1;
             }
         }
-
         public bool DeletePlayer(int id, string userId)
         {
             using (var ctx = new ApplicationDbContext())
@@ -66,7 +62,6 @@ namespace Rival.Services.PlayerServices
                 return ctx.SaveChanges() == 1;
             }
         }
-
         public IEnumerable<PlayerListItem> GetPlayers()
         {
             using (var ctx = new ApplicationDbContext())
@@ -97,7 +92,7 @@ namespace Rival.Services.PlayerServices
             {
                 var entity =
                     ctx
-                        .Players
+                        .Players.Include("MatchesPlayed").Include("MatchesPlayed.SetOfPlayers")
                         .Single(e => e.Id == id);
 
                 return new PlayerDetail
@@ -110,8 +105,42 @@ namespace Rival.Services.PlayerServices
                     DateJoined = entity.DateJoined,
                     PreferredSetNumber = entity.PreferredSetNumber,
                     Availability = entity.Availability,
-                    MatchesPlayed = entity.MatchesPlayed
+                    MatchesPlayed = entity.MatchesPlayed.OrderByDescending(e => e.Date)
                 };
+            }
+        }
+
+        public PlayerDashboard GetPlayerDashboard(int id, string userId)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var playerDetail = GetPlayerById(id);
+                var possibleMatchups = PlayersMatchingState(userId);
+
+                return new PlayerDashboard
+                {
+                    PlayerId = playerDetail.PlayerId,
+                    FirstName = playerDetail.FirstName,
+                    LastName = playerDetail.LastName,
+                    City = playerDetail.City,
+                    State = playerDetail.State,
+                    DateJoined = playerDetail.DateJoined,
+                    PreferredSetNumber = playerDetail.PreferredSetNumber,
+                    Availability = playerDetail.Availability,
+                    MatchesPlayed = playerDetail.MatchesPlayed,
+                    PossibleMatchups = possibleMatchups
+                };
+            }
+        }
+        public IEnumerable<Player> PlayersMatchingState(string userId)
+        {
+            var currentUserId = Guid.Parse(userId);
+            using (var ctx = new ApplicationDbContext())
+            {
+                var usersState = ctx.Players.Single(u => u.UserId == currentUserId).State;
+                var query = ctx.Players.Where(q => q.State == usersState && q.UserId != currentUserId);
+
+                return query.ToArray();
             }
         }
     }

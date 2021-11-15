@@ -14,7 +14,8 @@ namespace Rival.Data
         Lunch = 1,
         Afternoon = 2,
         Evening = 3,
-        Weekends = 4
+        Weekends = 4,
+        Anytime = 5
     }
     public enum PreferredSetNumber
     {
@@ -51,6 +52,7 @@ namespace Rival.Data
         public string City { get; set; }
         [Required]
         public State State { get; set; }
+        public string Location { get { return City + ", " + State; } }
         [Required]
         public PlayerAvailability Availability { get; set; }
         public PreferredSetNumber PreferredSetNumber { get; set; } = PreferredSetNumber.NoPreference;

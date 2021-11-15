@@ -1,33 +1,26 @@
-﻿@model Rival.Models.Players.PlayerDetail
-
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>@Html.DisplayFor(model => model.FullName)</h1>
-    <p class="lead">This is where I'll put some cards to show Player information, matches, and potential opponents'</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Your Profile</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<div class="jumbotron text-center">
+    <h1>
+        <a href="@Url.Action("Index", "Court")"><img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/14565/tennis-court-sports-clipart-md.png" style="width: 50px; margin-right: 20px;"/></a>
+        Welcome to Rival!
+        <a href="@Url.Action("Index", "Court")"><img src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/14565/tennis-court-sports-clipart-md.png" style="width: 50px; margin-left: 20px;" /></a></h1>
+    <p class="lead">The online portal to find your next competitive tennis match.</p>
+    <div class="row">
+        <p class="col-sm"></p>
+        <p class="col-sm"><a href="@Url.Action("Dashboard", "Player")" style="width: 500px; margin: 8px; padding: 20px;" class="btn btn-primary btn-lg">Check out your own player dashboard &raquo;</a></p>
+        <p class="col-sm"></p>
+    </div>    
+    <div class="row">
+        <p class="col-sm"></p>
+        <p class="col-sm"><a href="@Url.Action("Index", "Player")" style="width: 500px; margin: 8px; padding: 20px;" class="btn btn-primary btn-lg">See who all is playing &raquo;</a></p>
+        <p class="col-sm"></p>
     </div>
-    <div class="col-md-4">
-        <h2>Possible Opponents</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Previous Matches</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="row">
+        <p class="col-sm"></p>
+        <p class="col-sm"><a href="@Url.Action("Create", "Match")" style="width: 500px; margin: 8px; padding: 20px;" class="btn btn-primary btn-lg">Get started with a new match &raquo;</a></p>
+        <p class="col-sm"></p>
     </div>
 </div>

@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNet.Identity;
-using Rival.Data;
-using Rival.Services.PlayerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,17 +8,9 @@ namespace Rival.WebMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationDbContext ctx = new ApplicationDbContext();
-        private readonly IPlayerService _playerService;
-
-        public ActionResult Dashboard()
+        public ActionResult Index()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var userPlayer = ctx.Players.Single(e => e.UserId == userId);
-
-            var detailModel = _playerService.GetPlayerById(userPlayer.Id);
-
-            return View(detailModel);
+            return View();
         }
 
         public ActionResult About()

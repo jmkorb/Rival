@@ -13,6 +13,11 @@ namespace Rival.WebMVC.Controllers
     public class CourtController : Controller
     {
         private readonly ICourtService _service;
+
+        public CourtController(ICourtService service)
+        {
+            _service = service;
+        }
         // GET: Note
         public ActionResult Index()
         {
