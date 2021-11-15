@@ -4,53 +4,49 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2 class="text-center">Create a New Match</h2>
 
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>MatchDetail</h4>
-        <hr />
-        
-        <div class="form-group">
-            <div class = "control-label col-md-2" >Your Opponent</div>
-            <div class="col-md-10">
-                @Html.LabelFor(model => model.PlayerTwoId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.DropDownList("PlayerTwoId", (ViewBag.PlayerTwo as SelectList), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PlayerTwoId, "", new { @class = "text-danger" })
-            </div>
-        </div>    
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
-            </div>
-        </div>        
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.CourtId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CourtId", (ViewBag.Court as SelectList), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CourtId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+<div class="form-horizontal" style="margin: 0 auto; width:750px;">
+    <hr />
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Your Opponent</div>
+        <div class="col" style="margin: 10px 0 20px 0;">
+            @Html.DropDownList("PlayerTwoId", (ViewBag.PlayerTwo as SelectList), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.PlayerTwoId, "", new { @class = "text-danger" })
         </div>
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div class="form-group">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col" style="margin: 10px 0 20px 0;">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="control-label col-md-2">Court</div>
+        <div class="col" style="margin: 10px 0 20px 0;">
+            @Html.DropDownList("CourtId", (ViewBag.Court as SelectList), htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CourtId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button class="col-md-offset-2 col-md-10 btn btn-block btn-primary" style="width:750px;">
+            <input type="button" value="Create" style="color: #fff" class="btn btn-default"/>
+        </button>
+    </div>
 </div>
+    }
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

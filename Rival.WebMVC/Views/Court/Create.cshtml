@@ -1,47 +1,43 @@
 ﻿@model Rival.Models.Courts.CourtCreate
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add Court";
 }
 
-<h2>Create</h2>
+<h2 class="text-center">Add A New Court</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>CourtCreate</h4>
+
+    <div class="form-horizontal" style="margin: 0 auto; width:750px;">
+        <span></span>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            First Name
+            <div class="col" style="margin: 10px 0 20px 0;">
                 @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label col-md-2"})
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.Condition, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col" style="margin: 10px 0 20px 0;">
                 @Html.EnumDropDownListFor(model => model.Condition, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Condition, "", new {@class = "text-danger"})
+                @Html.ValidationMessageFor(model => model.Condition, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+            <button class="col-md-offset-2 col-md-10 btn btn-block btn-primary" style="width:750px;">
+                <input type="button" value="Save" style="color: #fff" class="btn btn-default" onclick="@Url.Action("Dashboard", "Player")" />
+            </button>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -27,7 +27,19 @@ textarea {
     max-width: 280px;
 }
 
+#rival-button{
+    color: #fff;
+}
+
+#rival-button:hover {
+    color: #18bc9c;
+}
+
 .listRight {
     left: auto !important;
     right: 0 !important;
+}
+.form-center {
+    display: flex;
+    justify-content: center;
 }

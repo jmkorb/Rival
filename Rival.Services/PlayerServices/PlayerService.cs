@@ -45,7 +45,7 @@ namespace Rival.Services.PlayerServices
                 entity.PreferredSetNumber = model.PreferredSetNumber;
                 entity.Availability = model.Availability;
 
-                return ctx.SaveChanges() == 1;
+                return ctx.SaveChanges() > 0;
             }
         }
         public bool DeletePlayer(int id, string userId)

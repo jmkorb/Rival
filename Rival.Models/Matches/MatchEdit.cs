@@ -11,6 +11,7 @@ namespace Rival.Models.Matches
     {
         public int MatchId { get; set; }
         public DateTime Date { get; set; }
+        public int CourtId { get; set; }
         public Court Court { get; set; }
         public string Winner { get; set; }
         public string FinalScore { get; set; }
