@@ -107,13 +107,9 @@
     <Compile Include="Court.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Match.cs" />
-    <Compile Include="Migrations\202111132126570_redomigration.cs" />
-    <Compile Include="Migrations\202111132126570_redomigration.Designer.cs">
-      <DependentUpon>202111132126570_redomigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111141645171_playerdashboard.cs" />
-    <Compile Include="Migrations\202111141645171_playerdashboard.Designer.cs">
-      <DependentUpon>202111141645171_playerdashboard.cs</DependentUpon>
+    <Compile Include="Migrations\202111151826031_starterMigration.cs" />
+    <Compile Include="Migrations\202111151826031_starterMigration.Designer.cs">
+      <DependentUpon>202111151826031_starterMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Player.cs" />
@@ -124,11 +120,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111132126570_redomigration.resx">
-      <DependentUpon>202111132126570_redomigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111141645171_playerdashboard.resx">
-      <DependentUpon>202111141645171_playerdashboard.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111151826031_starterMigration.resx">
+      <DependentUpon>202111151826031_starterMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

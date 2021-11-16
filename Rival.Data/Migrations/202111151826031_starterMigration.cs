@@ -3,7 +3,7 @@ namespace Rival.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class redomigration : DbMigration
+    public partial class starterMigration : DbMigration
     {
         public override void Up()
         {
