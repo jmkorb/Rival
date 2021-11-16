@@ -1,9 +1,9 @@
-namespace Rival.Data.Migrations
+﻿namespace Rival.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class starterMigration : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {

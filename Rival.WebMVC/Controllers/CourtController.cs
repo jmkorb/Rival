@@ -26,14 +26,12 @@ namespace Rival.WebMVC.Controllers
             return View(model);
         }
 
-        // GET: Create
-        [Authorize(Roles = "Admin")]
+        // GET: Createsss
         public ActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CourtCreate model)

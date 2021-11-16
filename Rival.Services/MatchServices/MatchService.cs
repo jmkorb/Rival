@@ -83,21 +83,40 @@ namespace Rival.Services.MatchServices
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
-                    ctx
-                        .Matches.AsEnumerable()
-                        .Select(
-                            e =>
-                                new MatchListItem
-                                {
-                                    MatchId = e.Id,
-                                    PlayerOne = e.SetOfPlayers.ElementAt(1),
-                                    PlayerTwo = e.SetOfPlayers.ElementAt(0),
-                                    Date = e.Date
-                                }
-                        );
+                var query = ctx.Matches.Include("SetOfPlayers");
+                List<MatchListItem> matchList = new List<MatchListItem>();
 
-                return query.ToArray();
+                foreach (var match in query)
+                {
+                    var matchListItem = new MatchListItem
+                    {
+                        MatchId = match.Id,
+                        PlayerOne = match.SetOfPlayers[0],
+                        PlayerTwo = match.SetOfPlayers[1],
+                        Date = match.Date
+                    };
+                    matchList.Add(matchListItem);
+                }
+                // old code
+
+                //for each (Match in matches){
+                //    Match.
+                //}
+                //var query =
+                //    ctx
+                //        .Matches.
+                //        .Select(
+                //            e =>
+                //                new MatchListItem
+                //                {
+                //                    MatchId = e.Id,
+                //                    PlayerOne = e.SetOfPlayers.ElementAt(1),
+                //                    PlayerTwo = e.SetOfPlayers.ElementAt(0),
+                //                    Date = e.Date
+                //                }
+                //        );
+
+                return matchList.ToArray();
             }
         }
         public IEnumerable<MatchListItem> GetUserMatches(int id)
