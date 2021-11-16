@@ -9,7 +9,7 @@ https://trello.com/b/bLMsFE4H/rivalry
 Online portal to help tennis players find others to matchup against
 
 Installation
-Using the deployed site URL and registering via the top right dropdown: https://rivalfinalprojectdeplyoment.azurewebsites.net/
+Using the deployed site URL and registering via the top right dropdown: https://rivalappfinaldeploy.azurewebsites.net/
 
 Created By
 Jacob Korb
